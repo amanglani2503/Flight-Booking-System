@@ -1,0 +1,484 @@
+2025-04-12 01:30:16 [main] INFO  c.e.b.service.BookingService - Fetching all bookings for user: user@example.com
+2025-04-12 01:30:16 [main] INFO  c.e.b.service.BookingService - Fetching booking details for ID: 1
+2025-04-12 01:30:16 [main] WARN  c.e.b.service.BookingService - Booking not found with ID: 1
+2025-04-12 01:30:16 [main] INFO  c.e.b.service.BookingService - Fetching booking details for ID: 1
+2025-04-12 01:30:16 [main] INFO  c.e.b.service.BookingService - Cancelling booking ID: 999
+2025-04-12 01:30:16 [main] ERROR c.e.b.service.BookingService - Booking not found for cancellation, ID: 999
+2025-04-12 01:30:16 [main] INFO  c.e.b.service.BookingService - Cancelling booking ID: 1
+2025-04-12 01:30:16 [main] INFO  c.e.b.service.BookingService - Seat canceled in flight service for booking ID: 1
+2025-04-14 23:35:18 [main] INFO  c.e.b.BookingServiceApplication - Starting BookingServiceApplication using Java 23 with PID 14468 (E:\Backup\FlightBooking\booking-service\target\classes started by win in E:\Backup\FlightBooking\booking-service)
+2025-04-14 23:35:18 [main] DEBUG c.e.b.BookingServiceApplication - Running with Spring Boot v3.4.3, Spring v6.2.3
+2025-04-14 23:35:18 [main] INFO  c.e.b.BookingServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-14 23:35:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-14 23:35:20 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 172 ms. Found 1 JPA repository interface.
+2025-04-14 23:35:21 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=bd1eed19-a6b9-3669-9799-6682fb2ceda5
+2025-04-14 23:35:21 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8083 (http)
+2025-04-14 23:35:21 [main] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [2.0.8] using APR version [1.7.4].
+2025-04-14 23:35:21 [main] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2025-04-14 23:35:21 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8083"]
+2025-04-14 23:35:21 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-14 23:35:21 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-14 23:35:21 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-14 23:35:21 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2852 ms
+2025-04-14 23:35:21 [main] DEBUG c.e.booking_service.filter.JwtFilter - Filter 'jwtFilter' configured for use
+2025-04-14 23:35:22 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-14 23:35:22 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-14 23:35:22 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-14 23:35:22 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-14 23:35:23 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-14 23:35:23 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@8f09a02
+2025-04-14 23:35:23 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-14 23:35:23 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-14 23:35:23 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-14 23:35:23 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-14 23:35:27 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 23:35:27 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 23:35:28 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-14 23:35:28 [main] INFO  o.s.c.o.FeignClientFactoryBean - For 'FLIGHT-SERVICE' URL not provided. Will try picking an instance via load-balancing.
+2025-04-14 23:35:29 [main] INFO  o.s.c.o.FeignClientFactoryBean - For 'MESSAGING-SERVICE' URL not provided. Will try picking an instance via load-balancing.
+2025-04-14 23:35:29 [main] INFO  o.s.c.o.FeignClientFactoryBean - For 'PAYMENT-SERVICE' URL not provided. Will try picking an instance via load-balancing.
+2025-04-14 23:35:29 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2025-04-14 23:35:32 [main] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestTemplate.
+2025-04-14 23:35:32 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-04-14 23:35:32 [main] INFO  o.s.c.n.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2025-04-14 23:35:32 [main] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2025-04-14 23:35:32 [main] DEBUG c.n.discovery.endpoint.EndpointUtils - The availability zone for the given region us-east-1 are [defaultZone]
+2025-04-14 23:35:32 [main] DEBUG c.n.d.s.r.aws.ConfigClusterResolver - Config resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:35:32 [main] DEBUG c.n.d.s.r.a.ZoneAffinityClusterResolver - Local zone=defaultZone; resolved to: [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Disable delta property : false
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Application is null : false
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Application version is -1: true
+2025-04-14 23:35:32 [main] INFO  c.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2025-04-14 23:35:32 [main] DEBUG c.n.d.s.t.d.SessionedEurekaHttpClient - Ending a session and starting anew
+2025-04-14 23:35:33 [main] DEBUG c.n.d.s.t.d.RedirectingEurekaHttpClient - Pinning to endpoint null
+2025-04-14 23:35:33 [main] INFO  c.netflix.discovery.DiscoveryClient - The response status is 200
+2025-04-14 23:35:33 [main] DEBUG c.netflix.discovery.DiscoveryClient - Got full registry with apps hashcode UP_2_
+2025-04-14 23:35:33 [main] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 2
+2025-04-14 23:35:33 [main] INFO  c.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 30
+2025-04-14 23:35:33 [main] INFO  c.n.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-04-14 23:35:33 [main] INFO  c.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1744653933598 with initial instances count: 2
+2025-04-14 23:35:33 [main] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Registering application BOOKING-SERVICE with eureka with status UP
+2025-04-14 23:35:33 [main] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1744653933615, current=UP, previous=STARTING]
+2025-04-14 23:35:33 [DiscoveryClient-InstanceInfoReplicator-%d] DEBUG c.n.discovery.InstanceInfoReplicator - Executing on-demand update of local InstanceInfo
+2025-04-14 23:35:33 [DiscoveryClient-InstanceInfoReplicator-%d] DEBUG c.n.discovery.InstanceInfoReplicator - Canceling the latest scheduled update, it will be rescheduled at the end of on demand update
+2025-04-14 23:35:33 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083: registering service...
+2025-04-14 23:35:33 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8083"]
+2025-04-14 23:35:33 [DiscoveryClient-InstanceInfoReplicator-%d] DEBUG c.n.d.s.t.d.SessionedEurekaHttpClient - Ending a session and starting anew
+2025-04-14 23:35:33 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8083 (http) with context path '/'
+2025-04-14 23:35:33 [main] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8083
+2025-04-14 23:35:33 [main] INFO  c.e.b.BookingServiceApplication - Started BookingServiceApplication in 15.496 seconds (process running for 17.385)
+2025-04-14 23:35:33 [DiscoveryClient-InstanceInfoReplicator-%d] DEBUG c.n.d.s.t.d.RedirectingEurekaHttpClient - Pinning to endpoint null
+2025-04-14 23:35:33 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - registration status: 204
+2025-04-14 23:36:03 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:36:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_3_
+2025-04-14 23:36:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:flight-service:8082 to the existing apps in region null
+2025-04-14 23:36:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:36:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 2
+2025-04-14 23:36:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 3
+2025-04-14 23:36:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_3_, is fetching remote regions? false 
+2025-04-14 23:36:33 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:36:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_3_
+2025-04-14 23:36:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:flight-service:8082 to the existing apps in region null
+2025-04-14 23:36:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:36:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 2
+2025-04-14 23:36:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 3
+2025-04-14 23:36:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_3_, is fetching remote regions? false 
+2025-04-14 23:37:03 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:37:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_3_
+2025-04-14 23:37:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:flight-service:8082 to the existing apps in region null
+2025-04-14 23:37:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:37:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 2
+2025-04-14 23:37:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 3
+2025-04-14 23:37:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_3_, is fetching remote regions? false 
+2025-04-14 23:37:33 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_4_
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:flight-service:8082 to the existing apps in region null
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 4
+2025-04-14 23:37:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_4_, is fetching remote regions? false 
+2025-04-14 23:38:03 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_4_
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:flight-service:8082 to the existing apps in region null
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 4
+2025-04-14 23:38:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_4_, is fetching remote regions? false 
+2025-04-14 23:38:33 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:38:33 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:39:03 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:39:03 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:39:34 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:39:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:40:04 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:40:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:40:33 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2025-04-14 23:40:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.discovery.endpoint.EndpointUtils - The availability zone for the given region us-east-1 are [defaultZone]
+2025-04-14 23:40:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.aws.ConfigClusterResolver - Config resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:40:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.a.ZoneAffinityClusterResolver - Local zone=defaultZone; resolved to: [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:40:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.shared.resolver.AsyncResolver - Resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:40:34 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:40:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:41:04 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:booking-service:8083 to the existing apps in region null
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:messaging-service:8084 to the existing apps in region null
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 3
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:41:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:41:34 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:41:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:41:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:41:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 1
+2025-04-14 23:41:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:41:34 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:41:38 [http-nio-8083-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-14 23:41:38 [http-nio-8083-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-14 23:41:38 [http-nio-8083-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 115 ms
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.booking_service.filter.JwtFilter - Processing request: /bookings/book
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.booking_service.filter.JwtFilter - Token extracted: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUEFTU0VOR0VSIiwic3ViIjoiYW1iZXJtYW5nbGFuaTE0MzE0M0BnbWFpbC5jb20iLCJpYXQiOjE3NDQ2NTM1MzEsImV4cCI6MTc0NDY1NzEzMX0.GSMLNyeh_XP0Oto--MrK32i9BbxDJQ3R2pAOVVoDis0
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting username from token
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.b.service.JWTService - Username extracted: ambermanglani143143@gmail.com
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting role from JWT
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.b.service.JWTService - Role extracted: PASSENGER
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.booking_service.filter.JwtFilter - Extracted username: ambermanglani143143@gmail.com, role: PASSENGER
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Validating token for user: ambermanglani143143@gmail.com
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting username from token
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.b.service.JWTService - Username extracted: ambermanglani143143@gmail.com
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.JWTService - Token expiration date: Tue Apr 15 00:28:51 IST 2025, is expired: false
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.b.service.JWTService - Token validation result for user ambermanglani143143@gmail.com: true
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.booking_service.filter.JwtFilter - Token validated successfully for user: ambermanglani143143@gmail.com
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.b.controller.BookingController - Received booking request for user: ambermanglani8871@gmail.com
+2025-04-14 23:41:39 [http-nio-8083-exec-1] INFO  c.e.b.service.BookingService - Initiating booking process for user: ambermanglani8871@gmail.com, flight ID: 1
+2025-04-14 23:41:39 [http-nio-8083-exec-1] DEBUG c.e.b.service.BookingService - Authorization token extracted from request
+2025-04-14 23:41:55 [http-nio-8083-exec-1] DEBUG c.e.b.service.BookingService - Saved booking as PENDING: BookingResponse(bookingId=37, emailId=ambermanglani8871@gmail.com, flightId=1, passengerName=John Doe, bookingDate=2025-04-14T23:41:39.722311300, status=PENDING, seatNumber=null)
+2025-04-14 23:41:55 [http-nio-8083-exec-1] INFO  c.e.b.service.BookingService - Seat booked successfully for flight ID: 1
+2025-04-14 23:42:04 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:42:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:42:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:42:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 1
+2025-04-14 23:42:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:42:04 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:42:22 [http-nio-8083-exec-1] INFO  c.e.b.service.BookingService - Booking confirmed for user: ambermanglani8871@gmail.com
+2025-04-14 23:42:32 [http-nio-8083-exec-1] DEBUG c.e.b.service.BookingService - Confirmation message sent for booking ID: 38
+2025-04-14 23:42:32 [http-nio-8083-exec-1] INFO  c.e.b.controller.BookingController - Booking and payment successful for user: John Doe
+2025-04-14 23:42:34 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:42:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:42:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:42:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 1
+2025-04-14 23:42:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:42:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:43:04 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:43:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:43:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:43:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 1
+2025-04-14 23:43:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:43:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:43:34 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:43:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:43:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:43:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 1
+2025-04-14 23:43:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:43:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:44:05 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:44:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:44:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Added instance Amber-PC.mshome.net:payment-service:8085 to the existing apps in region null
+2025-04-14 23:44:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 1
+2025-04-14 23:44:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:44:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:44:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:44:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:44:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:44:35 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:44:36 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:45:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:45:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:45:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:45:05 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:45:06 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:45:33 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2025-04-14 23:45:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.discovery.endpoint.EndpointUtils - The availability zone for the given region us-east-1 are [defaultZone]
+2025-04-14 23:45:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.aws.ConfigClusterResolver - Config resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:45:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.a.ZoneAffinityClusterResolver - Local zone=defaultZone; resolved to: [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:45:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.shared.resolver.AsyncResolver - Resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:45:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:45:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:45:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:45:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:45:36 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:46:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:46:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:46:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:46:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:46:06 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:46:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:46:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:46:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:46:36 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:46:36 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:47:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:47:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:47:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:47:06 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:47:06 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.booking_service.filter.JwtFilter - Processing request: /bookings/book
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.booking_service.filter.JwtFilter - Token extracted: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUEFTU0VOR0VSIiwic3ViIjoiYW1iZXJtYW5nbGFuaTE0MzE0M0BnbWFpbC5jb20iLCJpYXQiOjE3NDQ2NTM1MzEsImV4cCI6MTc0NDY1NzEzMX0.GSMLNyeh_XP0Oto--MrK32i9BbxDJQ3R2pAOVVoDis0
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting username from token
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.b.service.JWTService - Username extracted: ambermanglani143143@gmail.com
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting role from JWT
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.b.service.JWTService - Role extracted: PASSENGER
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.booking_service.filter.JwtFilter - Extracted username: ambermanglani143143@gmail.com, role: PASSENGER
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Validating token for user: ambermanglani143143@gmail.com
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting username from token
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.b.service.JWTService - Username extracted: ambermanglani143143@gmail.com
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.JWTService - Token expiration date: Tue Apr 15 00:28:51 IST 2025, is expired: false
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.b.service.JWTService - Token validation result for user ambermanglani143143@gmail.com: true
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.booking_service.filter.JwtFilter - Token validated successfully for user: ambermanglani143143@gmail.com
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.b.controller.BookingController - Received booking request for user: ambermanglani143143@gmail.com
+2025-04-14 23:47:22 [http-nio-8083-exec-2] INFO  c.e.b.service.BookingService - Initiating booking process for user: ambermanglani143143@gmail.com, flight ID: 1
+2025-04-14 23:47:22 [http-nio-8083-exec-2] DEBUG c.e.b.service.BookingService - Authorization token extracted from request
+2025-04-14 23:47:24 [http-nio-8083-exec-2] DEBUG c.e.b.service.BookingService - Saved booking as PENDING: BookingResponse(bookingId=39, emailId=ambermanglani143143@gmail.com, flightId=1, passengerName=Amber Manglani, bookingDate=2025-04-14T23:47:22.754361300, status=PENDING, seatNumber=null)
+2025-04-14 23:47:24 [http-nio-8083-exec-2] INFO  c.e.b.service.BookingService - Seat booked successfully for flight ID: 1
+2025-04-14 23:47:30 [http-nio-8083-exec-2] INFO  c.e.b.service.BookingService - Booking confirmed for user: ambermanglani143143@gmail.com
+2025-04-14 23:47:31 [http-nio-8083-exec-2] DEBUG c.e.b.service.BookingService - Confirmation message sent for booking ID: 40
+2025-04-14 23:47:31 [http-nio-8083-exec-2] INFO  c.e.b.controller.BookingController - Booking and payment successful for user: Amber Manglani
+2025-04-14 23:47:37 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:47:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:47:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:47:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:47:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:48:07 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:48:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:48:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:48:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:48:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:48:37 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:48:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:48:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:48:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:48:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:49:07 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:49:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:49:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:49:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:49:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:49:37 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:49:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:49:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:49:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:49:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:50:07 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:50:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:50:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:50:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:50:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:50:33 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2025-04-14 23:50:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.discovery.endpoint.EndpointUtils - The availability zone for the given region us-east-1 are [defaultZone]
+2025-04-14 23:50:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.aws.ConfigClusterResolver - Config resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:50:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.a.ZoneAffinityClusterResolver - Local zone=defaultZone; resolved to: [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:50:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.shared.resolver.AsyncResolver - Resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:50:37 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:50:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:50:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:50:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:50:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:51:07 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:51:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:51:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:51:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:51:07 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:51:37 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:51:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:51:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:51:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:51:37 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:52:07 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.n.d.s.t.d.SessionedEurekaHttpClient - Ending a session and starting anew
+2025-04-14 23:52:08 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:52:08 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:52:08 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:52:08 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:52:13 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.n.d.s.t.d.RedirectingEurekaHttpClient - Pinning to endpoint null
+2025-04-14 23:52:13 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:52:38 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:52:38 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:52:38 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:52:38 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:52:43 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:53:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:53:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:53:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:53:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:53:13 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:53:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:53:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:53:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:53:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:53:43 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:54:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:54:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:54:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:54:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:54:13 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:54:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.n.d.s.t.d.SessionedEurekaHttpClient - Ending a session and starting anew
+2025-04-14 23:54:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.n.d.s.t.d.RedirectingEurekaHttpClient - Pinning to endpoint null
+2025-04-14 23:54:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:54:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:54:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:54:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:54:43 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:55:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:55:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:55:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:55:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:55:13 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:55:33 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2025-04-14 23:55:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.discovery.endpoint.EndpointUtils - The availability zone for the given region us-east-1 are [defaultZone]
+2025-04-14 23:55:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.aws.ConfigClusterResolver - Config resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:55:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.s.r.a.ZoneAffinityClusterResolver - Local zone=defaultZone; resolved to: [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:55:33 [AsyncResolver-bootstrap-executor-%d] DEBUG c.n.d.shared.resolver.AsyncResolver - Resolved to [AwsEndpoint{ serviceUrl='http://localhost:8761/eureka/', region='us-east-1', zone='defaultZone'}]
+2025-04-14 23:55:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:55:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:55:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:55:39 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:55:43 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:56:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:56:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:56:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:56:09 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:56:13 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:56:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:56:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:56:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:56:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:56:47 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.booking_service.filter.JwtFilter - Processing request: /bookings/book
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.booking_service.filter.JwtFilter - Token extracted: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUEFTU0VOR0VSIiwic3ViIjoiYW1iZXJtYW5nbGFuaTE0MzE0M0BnbWFpbC5jb20iLCJpYXQiOjE3NDQ2NTM1MzEsImV4cCI6MTc0NDY1NzEzMX0.GSMLNyeh_XP0Oto--MrK32i9BbxDJQ3R2pAOVVoDis0
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting username from token
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:57:08 [http-nio-8083-exec-5] INFO  c.e.b.service.JWTService - Username extracted: ambermanglani143143@gmail.com
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting role from JWT
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:57:08 [http-nio-8083-exec-5] INFO  c.e.b.service.JWTService - Role extracted: PASSENGER
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.booking_service.filter.JwtFilter - Extracted username: ambermanglani143143@gmail.com, role: PASSENGER
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Validating token for user: ambermanglani143143@gmail.com
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting username from token
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:57:08 [http-nio-8083-exec-5] INFO  c.e.b.service.JWTService - Username extracted: ambermanglani143143@gmail.com
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Extracting all claims from token
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Decoding and building secret key
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Claims successfully extracted
+2025-04-14 23:57:08 [http-nio-8083-exec-5] DEBUG c.e.b.service.JWTService - Token expiration date: Tue Apr 15 00:28:51 IST 2025, is expired: false
+2025-04-14 23:57:08 [http-nio-8083-exec-5] INFO  c.e.b.service.JWTService - Token validation result for user ambermanglani143143@gmail.com: true
+2025-04-14 23:57:08 [http-nio-8083-exec-5] INFO  c.e.booking_service.filter.JwtFilter - Token validated successfully for user: ambermanglani143143@gmail.com
+2025-04-14 23:57:09 [http-nio-8083-exec-5] INFO  c.e.b.controller.BookingController - Received booking request for user: rajputadityasingh24@gmail.com
+2025-04-14 23:57:09 [http-nio-8083-exec-5] INFO  c.e.b.service.BookingService - Initiating booking process for user: rajputadityasingh24@gmail.com, flight ID: 1
+2025-04-14 23:57:09 [http-nio-8083-exec-5] DEBUG c.e.b.service.BookingService - Authorization token extracted from request
+2025-04-14 23:57:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:57:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:57:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:57:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:57:10 [http-nio-8083-exec-5] DEBUG c.e.b.service.BookingService - Saved booking as PENDING: BookingResponse(bookingId=41, emailId=rajputadityasingh24@gmail.com, flightId=1, passengerName=Aditya Singh Rajpoot, bookingDate=2025-04-14T23:57:08.985957600, status=PENDING, seatNumber=null)
+2025-04-14 23:57:10 [http-nio-8083-exec-5] INFO  c.e.b.service.BookingService - Seat booked successfully for flight ID: 1
+2025-04-14 23:57:17 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:57:25 [http-nio-8083-exec-5] INFO  c.e.b.service.BookingService - Booking confirmed for user: rajputadityasingh24@gmail.com
+2025-04-14 23:57:26 [http-nio-8083-exec-5] DEBUG c.e.b.service.BookingService - Confirmation message sent for booking ID: 42
+2025-04-14 23:57:26 [http-nio-8083-exec-5] INFO  c.e.b.controller.BookingController - Booking and payment successful for user: Aditya Singh Rajpoot
+2025-04-14 23:57:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:57:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:57:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:57:40 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:57:47 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:58:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Got delta update with apps hashcode UP_5_
+2025-04-14 23:58:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of instances fetched by the delta processor : 0
+2025-04-14 23:58:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - The total number of all instances in the client now is 5
+2025-04-14 23:58:10 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - Completed cache refresh task for discovery. All Apps hash code is Local region apps hashcode: UP_5_, is fetching remote regions? false 
+2025-04-14 23:58:16 [SpringApplicationShutdownHook] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Unregistering application BOOKING-SERVICE with eureka with status DOWN
+2025-04-14 23:58:16 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1744655296382, current=DOWN, previous=UP]
+2025-04-14 23:58:16 [DiscoveryClient-InstanceInfoReplicator-%d] DEBUG c.n.discovery.InstanceInfoReplicator - Executing on-demand update of local InstanceInfo
+2025-04-14 23:58:16 [DiscoveryClient-InstanceInfoReplicator-%d] DEBUG c.n.discovery.InstanceInfoReplicator - Canceling the latest scheduled update, it will be rescheduled at the end of on demand update
+2025-04-14 23:58:16 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083: registering service...
+2025-04-14 23:58:16 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - registration status: 204
+2025-04-14 23:58:16 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-14 23:58:16 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-14 23:58:16 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 23:58:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-14 23:58:17 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-14 23:58:17 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - Shutting down DiscoveryClient ...
+2025-04-14 23:58:17 [DiscoveryClient-HeartbeatExecutor-%d] DEBUG c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - Heartbeat status: 200
+2025-04-14 23:58:20 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - Unregistering ...
+2025-04-14 23:58:20 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_BOOKING-SERVICE/Amber-PC.mshome.net:booking-service:8083 - deregister  status: 200
+2025-04-14 23:58:20 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient
