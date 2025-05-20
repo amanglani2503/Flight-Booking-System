@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -31,6 +32,17 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
+
+            if (request.getURI().getPath().equalsIgnoreCase("/auth/login")) {
+                logger.debug("Skipping authentication for /auth/login");
+                return chain.filter(exchange);
+            }
+
+            // Allow all OPTIONS requests without authentication
+            if (request.getMethod() == HttpMethod.OPTIONS) {
+                logger.debug("OPTIONS request allowed without authentication: {}", request.getURI());
+                return chain.filter(exchange);
+            }
 
             // Apply filter only on secured routes
             if (validator.isSecured.test(request)) {
