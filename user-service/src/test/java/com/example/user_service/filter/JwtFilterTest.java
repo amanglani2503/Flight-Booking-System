@@ -1,7 +1,7 @@
 package com.example.user_service.filter;
 
 import com.example.user_service.model.Role;
-import com.example.user_service.model.User;
+import com.example.user_service.model.UserRegistration;
 import com.example.user_service.model.UserPrincipal;
 import com.example.user_service.service.JWTService;
 import com.example.user_service.service.UserDetailsServiceImpl;
@@ -51,12 +51,12 @@ class JwtFilterTest {
         String token = "valid.token.value";
         String username = "test@example.com";
 
-        User mockUser = new User();
-        mockUser.setEmail(username);
-        mockUser.setPassword("encodedpass");
-        mockUser.setRole(Role.PASSENGER);
+        UserRegistration mockUserRegistration = new UserRegistration();
+        mockUserRegistration.setEmail(username);
+        mockUserRegistration.setPassword("encodedpass");
+        mockUserRegistration.setRole(Role.PASSENGER);
 
-        UserPrincipal userDetails = new UserPrincipal(mockUser);
+        UserPrincipal userDetails = new UserPrincipal(mockUserRegistration);
 
         when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(jwtService.extractUsername(token)).thenReturn(username);

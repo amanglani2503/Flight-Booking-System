@@ -1,7 +1,7 @@
 package com.example.user_service.service;
 
 import com.example.user_service.model.Role;
-import com.example.user_service.model.User;
+import com.example.user_service.model.UserRegistration;
 import com.example.user_service.model.UserPrincipal;
 import com.example.user_service.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserDetailsServiceImplTest {
+class UserRegistrationDetailsServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
@@ -32,14 +32,14 @@ class UserDetailsServiceImplTest {
     void testLoadUserByUsername_ShouldReturnUserPrincipal_WhenUserExists() {
         // Arrange
         String email = "alice@example.com";
-        User user = new User();
-        user.setId(1L);
-        user.setName("Alice");
-        user.setEmail(email);
-        user.setPassword("encodedPass");
-        user.setRole(Role.ADMIN);
+        UserRegistration userRegistration = new UserRegistration();
+        userRegistration.setId(1L);
+        userRegistration.setName("Alice");
+        userRegistration.setEmail(email);
+        userRegistration.setPassword("encodedPass");
+        userRegistration.setRole(Role.ADMIN);
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(userRegistration));
 
         // Act
         UserDetails result = userDetailsService.loadUserByUsername(email);

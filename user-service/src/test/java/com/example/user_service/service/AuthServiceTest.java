@@ -1,7 +1,8 @@
 package com.example.user_service.service;
 
 import com.example.user_service.model.Role;
-import com.example.user_service.model.User;
+import com.example.user_service.model.UserLogin;
+import com.example.user_service.model.UserRegistration;
 import com.example.user_service.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,31 +41,31 @@ class AuthServiceTest {
     @Test
     void testRegister_ShouldEncodePasswordAndSaveUser() {
         // Arrange
-        User user = new User();
-        user.setName("Alice");
-        user.setEmail("alice@example.com");
-        user.setPassword("password123");
-        user.setRole(Role.PASSENGER);
+        UserRegistration userRegistration = new UserRegistration();
+        userRegistration.setName("Alice");
+        userRegistration.setEmail("alice@example.com");
+        userRegistration.setPassword("password123");
+        userRegistration.setRole(Role.PASSENGER);
 
-        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.save(any(UserRegistration.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        User savedUser = authService.register(user);
+        UserRegistration savedUserRegistration = authService.register(userRegistration);
 
         // Assert
-        assertNotNull(savedUser);
-        assertNotEquals("password123", savedUser.getPassword()); // Password should be encoded
-        verify(userRepository, times(1)).save(any(User.class));
+        assertNotNull(savedUserRegistration);
+        assertNotEquals("password123", savedUserRegistration.getPassword()); // Password should be encoded
+        verify(userRepository, times(1)).save(any(UserRegistration.class));
     }
 
     @Test
     void testLogin_ShouldReturnJwtTokenOnSuccessfulAuth() {
         // Arrange
-        User user = new User();
-        user.setEmail("bob@example.com");
-        user.setPassword("securePass");
+        UserLogin userLogin = new UserLogin();
+        userLogin.setEmail("bob@example.com");
+        userLogin.setPassword("securePass");
 
-        User dbUser = new User();
+        UserRegistration dbUser = new UserRegistration();
         dbUser.setEmail("bob@example.com");
         dbUser.setRole(Role.ADMIN);
 
@@ -75,25 +76,27 @@ class AuthServiceTest {
         when(jwtService.generateToken("bob@example.com", Role.ADMIN)).thenReturn("mock-jwt-token");
 
         // Act
-        String token = authService.login(user);
+        String token = authService.login(userLogin);
 
         // Assert
         assertEquals("mock-jwt-token", token);
         verify(jwtService, times(1)).generateToken("bob@example.com", Role.ADMIN);
     }
 
+
     @Test
     void testLogin_ShouldReturnNullWhenAuthenticationFails() {
         // Arrange
-        User user = new User();
-        user.setEmail("fake@example.com");
-        user.setPassword("wrong");
+        UserLogin userLogin = new UserLogin();
+
+        userLogin.setEmail("fake@example.com");
+        userLogin.setPassword("wrong");
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new RuntimeException("Bad credentials"));
 
         // Act
-        String token = authService.login(user);
+        String token = authService.login(userLogin);
 
         // Assert
         assertNull(token);

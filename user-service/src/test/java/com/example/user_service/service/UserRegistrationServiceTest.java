@@ -1,7 +1,7 @@
 package com.example.user_service.service;
 
 import com.example.user_service.model.Role;
-import com.example.user_service.model.User;
+import com.example.user_service.model.UserRegistration;
 import com.example.user_service.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserServiceTest {
+class UserRegistrationServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -31,15 +31,15 @@ class UserServiceTest {
     @Test
     void testGetUserByEmail_ShouldReturnUser_WhenFound() {
         String email = "test@example.com";
-        User mockUser = new User();
-        mockUser.setId(1L);
-        mockUser.setEmail(email);
-        mockUser.setName("Test");
-        mockUser.setRole(Role.PASSENGER);
+        UserRegistration mockUserRegistration = new UserRegistration();
+        mockUserRegistration.setId(1L);
+        mockUserRegistration.setEmail(email);
+        mockUserRegistration.setName("Test");
+        mockUserRegistration.setRole(Role.PASSENGER);
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(mockUser));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(mockUserRegistration));
 
-        User result = userService.getUserByEmail(email);
+        UserRegistration result = userService.getUserByEmail(email);
 
         assertNotNull(result);
         assertEquals(email, result.getEmail());
@@ -85,33 +85,33 @@ class UserServiceTest {
     @Test
     void testUpdateUser_ShouldUpdateFields_WhenUserExists() {
         Integer userId = 1;
-        User existingUser = new User();
-        existingUser.setId(1L);
-        existingUser.setEmail("old@example.com");
-        existingUser.setName("Old Name");
-        existingUser.setPassword("oldpass");
-        existingUser.setRole(Role.ADMIN);
+        UserRegistration existingUserRegistration = new UserRegistration();
+        existingUserRegistration.setId(1L);
+        existingUserRegistration.setEmail("old@example.com");
+        existingUserRegistration.setName("Old Name");
+        existingUserRegistration.setPassword("oldpass");
+        existingUserRegistration.setRole(Role.ADMIN);
 
-        User updates = new User();
+        UserRegistration updates = new UserRegistration();
         updates.setEmail("new@example.com");
         updates.setName("New Name");
         updates.setPassword("newpass");
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(existingUserRegistration));
+        when(userRepository.save(any(UserRegistration.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        User updatedUser = userService.updateUser(userId, updates);
+        UserRegistration updatedUserRegistration = userService.updateUser(userId, updates);
 
-        assertEquals("New Name", updatedUser.getName());
-        assertEquals("new@example.com", updatedUser.getEmail());
-        assertNotEquals("newpass", updatedUser.getPassword()); // Should be encoded
+        assertEquals("New Name", updatedUserRegistration.getName());
+        assertEquals("new@example.com", updatedUserRegistration.getEmail());
+        assertNotEquals("newpass", updatedUserRegistration.getPassword()); // Should be encoded
     }
 
     @Test
     void testUpdateUser_ShouldThrowException_WhenUserNotFound() {
         when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        User dummyUpdate = new User();
+        UserRegistration dummyUpdate = new UserRegistration();
         dummyUpdate.setName("Update");
 
         assertThrows(RuntimeException.class, () -> userService.updateUser(99, dummyUpdate));

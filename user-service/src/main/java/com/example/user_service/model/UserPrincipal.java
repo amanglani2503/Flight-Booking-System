@@ -8,25 +8,25 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
-    private final User user;
+    private final UserRegistration userRegistration;
 
-    public UserPrincipal(User user) {
-        this.user = user;
+    public UserPrincipal(UserRegistration userRegistration) {
+        this.userRegistration = userRegistration;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
+        return List.of(new SimpleGrantedAuthority(userRegistration.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userRegistration.getPassword();
     }
 
     @Override
     public String getUsername() {  // Here, we return email instead of username
-        return user.getEmail();
+        return userRegistration.getEmail();
     }
 
     @Override

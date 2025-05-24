@@ -1,13 +1,15 @@
 package com.example.booking_service.service;
 
+import com.example.booking_service.customexceptions.AuthorizationException;
+import com.example.booking_service.customexceptions.BookingNotFoundException;
+import com.example.booking_service.customexceptions.PaymentFailedException;
+import com.example.booking_service.customexceptions.SeatUnavailableException;
 import com.example.booking_service.entity.*;
 import com.example.booking_service.feign.FlightServiceFeign;
 import com.example.booking_service.feign.MessagingServiceFeign;
 import com.example.booking_service.feign.PaymentServiceFeign;
 import com.example.booking_service.repository.BookingRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,6 @@ import java.util.Optional;
 @Service
 public class BookingService {
 
-    private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
-
     @Autowired
     private BookingRepository bookingRepository;
 
@@ -35,17 +35,16 @@ public class BookingService {
     @Autowired
     private PaymentServiceFeign paymentServiceFeign;
 
-    // Handles flight booking and payment
     public StripeResponse bookFlight(Booking booking) {
-        logger.info("Initiating booking process for user: {}, flight ID: {}", booking.getEmailId(), booking.getFlightId());
         String token = extractTokenFromRequest();
         String authHeader = token.startsWith("Bearer ") ? token : "Bearer " + token;
 
         boolean available = flightServiceFeign.isSeatAvailable(booking.getFlightId(), authHeader);
+        // Replace this in bookFlight
         if (!available) {
-            logger.warn("Seat not available for flight ID: {}", booking.getFlightId());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Seat is not available!");
+            throw new SeatUnavailableException("Seat is not available!");
         }
+
 
         BookingResponse pendingBooking = new BookingResponse(
                 booking.getEmailId(),
@@ -57,11 +56,9 @@ public class BookingService {
                 null
         );
         bookingRepository.save(pendingBooking);
-        logger.debug("Saved booking as PENDING: {}", pendingBooking);
 
         try {
             FlightDetails flightDetails = flightServiceFeign.bookSeat(booking.getFlightId(), authHeader);
-            logger.info("Seat booked successfully for flight ID: {}", booking.getFlightId());
 
             PaymentRequest paymentRequest = new PaymentRequest();
             paymentRequest.setAmount(flightDetails.getTotalAmountPaid());
@@ -71,10 +68,11 @@ public class BookingService {
             paymentRequest.setUserId(booking.getEmailId());
 
             StripeResponse paymentResponse = paymentServiceFeign.makePayment(paymentRequest, authHeader);
+            // Replace this in case of payment failure
             if (!"SUCCESS".equalsIgnoreCase(paymentResponse.getStatus())) {
-                logger.error("Payment failed: {}", paymentResponse.getMessage());
-                throw new IllegalStateException("Payment failed: " + paymentResponse.getMessage());
+                throw new PaymentFailedException("Payment failed: " + paymentResponse.getMessage());
             }
+
 
             BookingResponse confirmedBooking = new BookingResponse(
                     booking.getEmailId(),
@@ -86,7 +84,6 @@ public class BookingService {
                     flightDetails.getSeatNumber()
             );
             bookingRepository.save(confirmedBooking);
-            logger.info("Booking confirmed for user: {}", booking.getEmailId());
 
             MessagingDetails messagingDetails = new MessagingDetails(
                     confirmedBooking.getEmailId(),
@@ -102,12 +99,10 @@ public class BookingService {
                     "CONFIRMED"
             );
             messagingServiceFeign.sendMessage(messagingDetails, authHeader);
-            logger.debug("Confirmation message sent for booking ID: {}", confirmedBooking.getBookingId());
 
             return paymentResponse;
 
         } catch (Exception ex) {
-            logger.error("Exception occurred during booking: {}", ex.getMessage(), ex);
             BookingResponse failedBooking = new BookingResponse(
                     booking.getEmailId(),
                     booking.getBookingId(),
@@ -118,27 +113,21 @@ public class BookingService {
                     null
             );
             bookingRepository.save(failedBooking);
-            logger.warn("Booking marked as FAILED: {}", failedBooking);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Booking failed: " + ex.getMessage());
         }
     }
 
-    // Handles booking cancellation
     public void cancelBooking(Long bookingId) {
-        logger.info("Cancelling booking ID: {}", bookingId);
         Optional<BookingResponse> booking = bookingRepository.findById(bookingId);
         if (booking.isPresent()) {
             BookingResponse existingBooking = booking.get();
             existingBooking.setStatus("CANCELED");
             bookingRepository.save(existingBooking);
-            logger.debug("Booking status set to CANCELED: {}", bookingId);
 
             String token = extractTokenFromRequest();
             String authHeader = token.startsWith("Bearer ") ? token : "Bearer " + token;
 
             flightServiceFeign.cancelSeat(existingBooking.getFlightId(), existingBooking.getSeatNumber(), authHeader);
-            logger.info("Seat canceled in flight service for booking ID: {}", bookingId);
-
             FlightDetails flightDetails = flightServiceFeign.getFlightDetails(existingBooking.getFlightId(), authHeader);
 
             MessagingDetails messagingDetails = new MessagingDetails(
@@ -155,24 +144,17 @@ public class BookingService {
                     "CANCELED"
             );
             messagingServiceFeign.sendMessage(messagingDetails, authHeader);
-            logger.debug("Cancellation message sent for booking ID: {}", bookingId);
         } else {
-            logger.error("Booking not found for cancellation, ID: {}", bookingId);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found with ID: " + bookingId);
+            throw new BookingNotFoundException("Booking not found with given Id");
         }
     }
 
     public BookingResponse getBookingDetails(Long bookingId) {
-        logger.info("Fetching booking details for ID: {}", bookingId);
         return bookingRepository.findById(bookingId)
-                .orElseThrow(() -> {
-                    logger.warn("Booking not found with ID: {}", bookingId);
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found with ID: " + bookingId);
-                });
+                .orElseThrow(() -> new BookingNotFoundException("Booking not found with ID: " + bookingId));
     }
 
     public List<BookingResponse> getBookingsByUser(String emailId) {
-        logger.info("Fetching all bookings for user: {}", emailId);
         return bookingRepository.findByEmailId(emailId);
     }
 
@@ -182,11 +164,11 @@ public class BookingService {
             HttpServletRequest request = attributes.getRequest();
             String token = request.getHeader("Authorization");
             if (token != null) {
-                logger.debug("Authorization token extracted from request");
                 return token;
             }
         }
-        logger.error("Authorization header not found in request");
-        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authorization header not found");
+        // Replace this in extractTokenFromRequest
+        throw new AuthorizationException("Authorization header not found");
+
     }
 }

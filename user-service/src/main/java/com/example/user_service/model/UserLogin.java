@@ -9,22 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegistration {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank(message = "Name cannot be blank")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
-    @Column(nullable = false)
-    private String name;
+public class UserLogin {
 
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Invalid email format")
@@ -35,8 +24,4 @@ public class UserRegistration {
     @Size(min = 6, message = "Password must be at least 6 characters long")
     @Column(nullable = false)
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
 }
