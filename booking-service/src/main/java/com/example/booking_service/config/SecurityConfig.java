@@ -1,7 +1,8 @@
 package com.example.booking_service.config;
 
-
 import com.example.booking_service.filter.JwtFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/bookings/confirm").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .requestMatchers("/bookings/**").hasRole("PASSENGER") // Restrict booking APIs
                         .anyRequest().authenticated() // Require authentication for all other requests
                 )
@@ -68,7 +71,6 @@ public class SecurityConfig {
         return firewall;
     }
 
-    // Dummy user detail service (not used with JWT)
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> null;

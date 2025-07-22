@@ -35,4 +35,20 @@ public class PaymentCheckoutController {
                     .body("Failed to create checkout session. Please try again later.");
         }
     }
+
+    @GetMapping("/success")
+    public ResponseEntity<String> handleSuccess(@RequestParam("bookingId") String bookingId,
+                                                @RequestParam String seatNumber) {
+        logger.info("Handling payment success for bookingId: {}, seatNumber: {}", bookingId, seatNumber);
+        try {
+            stripeService.handleSuccess(bookingId, seatNumber);
+            logger.info("Payment handled successfully for bookingId: {}", bookingId);
+            return ResponseEntity.ok("Payment done successfully");
+        } catch (Exception e) {
+            logger.error("Error occurred while handling payment success for bookingId: {}", bookingId, e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to complete payment processing.");
+        }
+    }
 }

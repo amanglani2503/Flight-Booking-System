@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentRequest {
     private double amount;
-    private Long flightId;
+    private String flightNumber;
     private String currency;
-
+    private String seatNumber;
     private String bookingId;
     private String userId;
 }

@@ -22,7 +22,7 @@ public class BookingNotificationConsumer {
         logger.debug("Message details: {}", details);
 
         try {
-            if ("CONFIRMED".equals(details.getStatus())) {
+            if ("CONFIRMED".equals(details.getBookingStatus())) {
                 logger.info("Processing CONFIRMED booking notification");
                 emailService.sendBookingEmail(details);
             } else {

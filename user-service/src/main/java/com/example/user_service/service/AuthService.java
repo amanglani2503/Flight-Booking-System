@@ -6,6 +6,8 @@ import com.example.user_service.customexceptions.UserNotFoundException;
 import com.example.user_service.model.UserLogin;
 import com.example.user_service.model.UserRegistration;
 import com.example.user_service.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @Service
 public class AuthService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -27,44 +31,46 @@ public class AuthService {
     @Autowired
     private JWTService jwtService;
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public UserRegistration register(UserRegistration userRegistration) {
+        logger.info("Attempting to register user with email: {}", userRegistration.getEmail());
+
         Optional<UserRegistration> userInDB = userRepository.findByEmail(userRegistration.getEmail());
         if (userInDB.isPresent()) {
+            logger.warn("User already exists with email: {}", userRegistration.getEmail());
             throw new UserAlreadyExistsException("User already exists!");
         }
+
         userRegistration.setPassword(encoder.encode(userRegistration.getPassword()));
-        return userRepository.save(userRegistration);
+        UserRegistration savedUser = userRepository.save(userRegistration);
+
+        logger.info("User registered successfully with email: {}", savedUser.getEmail());
+        return savedUser;
     }
 
     public String login(UserLogin userLogin) {
+        logger.info("Login attempt for email: {}", userLogin.getEmail());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
 
         if (authentication.isAuthenticated()) {
+            logger.info("Authentication successful for email: {}", userLogin.getEmail());
+
             return userRepository.findByEmail(userLogin.getEmail())
-                    .map(u -> jwtService.generateToken(userLogin.getEmail(), u.getRole()))
-                    .orElseThrow(() -> new UserNotFoundException("User not found after successful authentication"));
+                    .map(user -> {
+                        String token = jwtService.generateToken(userLogin.getEmail(), user.getRole());
+                        logger.info("JWT token generated for email: {}", userLogin.getEmail());
+                        return token;
+                    })
+                    .orElseThrow(() -> {
+                        logger.error("User not found in DB after authentication: {}", userLogin.getEmail());
+                        return new UserNotFoundException("User not found after successful authentication");
+                    });
         }
 
+        logger.warn("Authentication failed for email: {}", userLogin.getEmail());
         throw new InvalidCredentialsException("Invalid credentials");
     }
 }
-
-//<configuration>
-//    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-//        <file>logs/userRegistration-service.log</file>
-//        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-//            <fileNamePattern>logs/userRegistration-service-%d{yyyy-MM-dd}.log</fileNamePattern>
-//            <maxHistory>30</maxHistory>
-//        </rollingPolicy>
-//        <encoder>
-//            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
-//        </encoder>
-//    </appender>
-//
-//    <root level="INFO">
-//        <appender-ref ref="FILE" />
-//    </root>
-//</configuration>

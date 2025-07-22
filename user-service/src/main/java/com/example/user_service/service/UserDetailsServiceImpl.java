@@ -18,13 +18,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    // Loads user by email (username) and wraps it in a UserPrincipal
+    // Loads user by email and wraps it in a UserPrincipal
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         logger.info("Attempting to load user by email: {}", email);
+
         return userRepository.findByEmail(email)
                 .map(user -> {
                     logger.info("User found for email: {}", email);
+                    logger.debug("Constructing UserPrincipal for email: {}", email);
                     return new UserPrincipal(user);
                 })
                 .orElseThrow(() -> {

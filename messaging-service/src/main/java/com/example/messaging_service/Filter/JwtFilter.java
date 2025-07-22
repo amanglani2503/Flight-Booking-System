@@ -29,40 +29,54 @@ public class JwtFilter extends OncePerRequestFilter {
     private JWTService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
-        String token = null;
-        String username = null;
-        String role = null;
+        try {
+            String authHeader = request.getHeader("Authorization");
+            String token = null;
+            String username = null;
+            String role = null;
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7).trim();
-            try {
+            if (authHeader == null) {
+                logger.debug("Authorization header is missing");
+            } else if (!authHeader.startsWith("Bearer ")) {
+                logger.warn("Authorization header does not start with 'Bearer ': {}", authHeader);
+            } else {
+                token = authHeader.substring(7).trim();
                 username = jwtService.extractUsername(token);
                 role = jwtService.extractRole(token);
-                logger.debug("JWT extracted - Username: {}, Role: {}", username, role);
-            } catch (Exception e) {
-                logger.warn("Failed to extract or parse JWT: {}", e.getMessage());
+                logger.debug("Token extracted for user: {}", username);
             }
-        } else {
-            logger.debug("No JWT token found in Authorization header");
-        }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            String formattedRole = role != null && role.startsWith("ROLE_") ? role : "ROLE_" + role;
-            UserDetails userDetails = new User(username, "", List.of(new SimpleGrantedAuthority(formattedRole)));
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                String formattedRole = (role != null && role.startsWith("ROLE_")) ? role : "ROLE_" + role;
 
-            if (jwtService.validateToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-                logger.info("JWT validated and authentication set for user: {}", username);
-            } else {
-                logger.warn("JWT validation failed for user: {}", username);
+                UserDetails userDetails = new User(
+                        username,
+                        "",
+                        List.of(new SimpleGrantedAuthority(formattedRole))
+                );
+
+                if (jwtService.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                    logger.info("Authentication set for user: {}", username);
+                } else {
+                    logger.warn("Invalid JWT token for user: {}", username);
+                }
             }
+        } catch (Exception e) {
+            logger.error("Exception occurred in JWT filter: {}", e.getMessage(), e);
         }
 
         filterChain.doFilter(request, response);

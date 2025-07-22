@@ -25,27 +25,27 @@ public class JWTService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    // Generates JWT token with username and role as claims
-    public String generateToken(String username, Role role) {
+    // Generates JWT token with email and role as claims
+    public String generateToken(String email, Role role) {
         try {
-            logger.info("Generating token for username: {}", username);
+            logger.info("Generating token for email: {}", email);
             Map<String, Object> claims = new HashMap<>();
             claims.put("role", role);
 
             String token = Jwts.builder()
                     .claims()
                     .add(claims)
-                    .subject(username)
+                    .subject(email)
                     .issuedAt(new Date(System.currentTimeMillis()))
                     .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
                     .and()
                     .signWith(getKey())
                     .compact();
 
-            logger.debug("Token generated successfully for username: {}", username);
+            logger.debug("Token generated successfully for email: {}", email);
             return token;
         } catch (Exception e) {
-            logger.error("Error generating token for username {}: {}", username, e.getMessage(), e);
+            logger.error("Error generating token for email {}: {}", email, e.getMessage(), e);
             throw new RuntimeException("Token generation failed");
         }
     }
@@ -61,12 +61,12 @@ public class JWTService {
         }
     }
 
-    // Extracts username (subject) from token
+    // Extracts email (subject) from token
     public String extractUsername(String token) {
         try {
             return extractClaim(token, Claims::getSubject);
         } catch (Exception e) {
-            logger.error("Error extracting username from token: {}", e.getMessage(), e);
+            logger.error("Error extracting email from token: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -99,9 +99,9 @@ public class JWTService {
     // Validates the token with user details and expiration
     public boolean validateToken(String token, UserDetails userDetails) {
         try {
-            final String userName = extractUsername(token);
-            boolean valid = userName != null && userName.equals(userDetails.getUsername()) && !isTokenExpired(token);
-            logger.debug("Token validation for username {}: {}", userName, valid);
+            final String email = extractUsername(token);
+            boolean valid = email != null && email.equals(userDetails.getUsername()) && !isTokenExpired(token);
+            logger.debug("Token validation for email {}: {}", email, valid);
             return valid;
         } catch (Exception e) {
             logger.error("Token validation failed: {}", e.getMessage(), e);

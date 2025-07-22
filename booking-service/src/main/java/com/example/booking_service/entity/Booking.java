@@ -6,32 +6,34 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Entity
 @Data
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+    private Long id;
 
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
-    private String emailId;
+    private String email;
 
-    @NotNull(message = "Flight ID is required")
-    private Long flightId;
+    @NotNull(message = "Flight number is required")
+    private String flightCode;
 
     @NotBlank(message = "Passenger name is required")
     private String passengerName;
 
-    private LocalDateTime bookingDate;
+    @NotNull(message = "Journey date is required")
+    private LocalDate travelDate;
 
-    private String status;
+    private LocalDate dateOfBooking;
+
+    private String bookingStatus;
 
     public Booking() {
-        this.bookingDate = LocalDateTime.now();
-        this.status = "PENDING";
+        this.dateOfBooking = LocalDate.now();
+        this.bookingStatus = "PENDING";
     }
 }

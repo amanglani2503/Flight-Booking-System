@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,80 +36,74 @@ public class BookingService {
     @Autowired
     private PaymentServiceFeign paymentServiceFeign;
 
+    @Transactional
     public StripeResponse bookFlight(Booking booking) {
         String token = extractTokenFromRequest();
         String authHeader = token.startsWith("Bearer ") ? token : "Bearer " + token;
 
-        boolean available = flightServiceFeign.isSeatAvailable(booking.getFlightId(), authHeader);
-        // Replace this in bookFlight
+        System.out.println(booking.getTravelDate());
+        boolean available = flightServiceFeign.isSeatAvailable(booking.getFlightCode(), booking.getTravelDate(), authHeader);
         if (!available) {
             throw new SeatUnavailableException("Seat is not available!");
         }
 
-
         BookingResponse pendingBooking = new BookingResponse(
-                booking.getEmailId(),
-                booking.getBookingId(),
+                booking.getEmail(),
+                null,
                 booking.getPassengerName(),
-                booking.getFlightId(),
-                booking.getBookingDate(),
+                booking.getFlightCode(),
+                booking.getDateOfBooking(),
+                booking.getTravelDate(),
                 "PENDING",
                 null
         );
         bookingRepository.save(pendingBooking);
 
         try {
-            FlightDetails flightDetails = flightServiceFeign.bookSeat(booking.getFlightId(), authHeader);
+            FlightDetails flightDetails = flightServiceFeign.bookSeat(booking.getFlightCode(), booking.getTravelDate(), authHeader);
 
             PaymentRequest paymentRequest = new PaymentRequest();
-            paymentRequest.setAmount(flightDetails.getTotalAmountPaid());
+            paymentRequest.setBookingId(String.valueOf(pendingBooking.getId()));
             paymentRequest.setCurrency("usd");
-            paymentRequest.setFlightId(booking.getFlightId());
-            paymentRequest.setBookingId(String.valueOf(booking.getBookingId()));
-            paymentRequest.setUserId(booking.getEmailId());
+            paymentRequest.setSeatNumber(flightDetails.getSeatNumber());
+            paymentRequest.setAmount(flightDetails.getAmountPaid());
+            paymentRequest.setFlightNumber(booking.getFlightCode());
+            paymentRequest.setUserId(booking.getEmail());
 
             StripeResponse paymentResponse = paymentServiceFeign.makePayment(paymentRequest, authHeader);
-            // Replace this in case of payment failure
+
             if (!"SUCCESS".equalsIgnoreCase(paymentResponse.getStatus())) {
                 throw new PaymentFailedException("Payment failed: " + paymentResponse.getMessage());
             }
 
-
-            BookingResponse confirmedBooking = new BookingResponse(
-                    booking.getEmailId(),
-                    booking.getBookingId(),
-                    booking.getPassengerName(),
-                    booking.getFlightId(),
-                    booking.getBookingDate(),
-                    "CONFIRMED",
-                    flightDetails.getSeatNumber()
-            );
-            bookingRepository.save(confirmedBooking);
-
             MessagingDetails messagingDetails = new MessagingDetails(
-                    confirmedBooking.getEmailId(),
-                    confirmedBooking.getPassengerName(),
-                    confirmedBooking.getBookingId(),
-                    confirmedBooking.getFlightId(),
-                    flightDetails.getDepartureAirport(),
-                    flightDetails.getArrivalAirport(),
-                    flightDetails.getDepartureTime(),
-                    flightDetails.getArrivalTime(),
+                    booking.getEmail(),
+                    booking.getPassengerName(),
+                    pendingBooking.getId(),
+                    booking.getFlightCode(),
+                    flightDetails.getDepartureLocation(),
+                    flightDetails.getArrivalLocation(),
+                    flightDetails.getTimeOfDeparture(),
+                    flightDetails.getTimeOfArrival(),
+                    flightDetails.getTravelDate(),
+                    flightDetails.getDateOfBooking(),
                     flightDetails.getSeatNumber(),
-                    flightDetails.getTotalAmountPaid(),
+                    flightDetails.getAmountPaid(),
                     "CONFIRMED"
             );
+            System.out.println(messagingDetails);
             messagingServiceFeign.sendMessage(messagingDetails, authHeader);
 
             return paymentResponse;
 
         } catch (Exception ex) {
             BookingResponse failedBooking = new BookingResponse(
-                    booking.getEmailId(),
-                    booking.getBookingId(),
+                    booking.getEmail(),
+                    null,
                     booking.getPassengerName(),
-                    booking.getFlightId(),
-                    booking.getBookingDate(),
+                    booking.getFlightCode(),
+                    booking.getDateOfBooking(),
+                    booking.getTravelDate(),
                     "FAILED",
                     null
             );
@@ -121,26 +116,28 @@ public class BookingService {
         Optional<BookingResponse> booking = bookingRepository.findById(bookingId);
         if (booking.isPresent()) {
             BookingResponse existingBooking = booking.get();
-            existingBooking.setStatus("CANCELED");
+            existingBooking.setBookingStatus("CANCELED");
             bookingRepository.save(existingBooking);
 
             String token = extractTokenFromRequest();
             String authHeader = token.startsWith("Bearer ") ? token : "Bearer " + token;
 
-            flightServiceFeign.cancelSeat(existingBooking.getFlightId(), existingBooking.getSeatNumber(), authHeader);
-            FlightDetails flightDetails = flightServiceFeign.getFlightDetails(existingBooking.getFlightId(), authHeader);
+            flightServiceFeign.cancelSeat(existingBooking.getFlightNumber(), existingBooking.getJourneyDate(), existingBooking.getSeatNumber(), authHeader);
+            FlightDetails flightDetails = flightServiceFeign.getFlightDetails(existingBooking.getFlightNumber(), existingBooking.getJourneyDate(), authHeader);
 
             MessagingDetails messagingDetails = new MessagingDetails(
-                    existingBooking.getEmailId(),
+                    existingBooking.getEmail(),
                     existingBooking.getPassengerName(),
-                    existingBooking.getBookingId(),
-                    existingBooking.getFlightId(),
-                    flightDetails.getDepartureAirport(),
-                    flightDetails.getArrivalAirport(),
-                    flightDetails.getDepartureTime(),
-                    flightDetails.getArrivalTime(),
+                    existingBooking.getId(),
+                    existingBooking.getFlightNumber(),
+                    flightDetails.getDepartureLocation(),
+                    flightDetails.getArrivalLocation(),
+                    flightDetails.getTimeOfDeparture(),
+                    flightDetails.getTimeOfArrival(),
+                    flightDetails.getTravelDate(),
+                    flightDetails.getDateOfBooking(),
                     existingBooking.getSeatNumber(),
-                    flightDetails.getTotalAmountPaid(),
+                    flightDetails.getAmountPaid(),
                     "CANCELED"
             );
             messagingServiceFeign.sendMessage(messagingDetails, authHeader);
@@ -154,8 +151,8 @@ public class BookingService {
                 .orElseThrow(() -> new BookingNotFoundException("Booking not found with ID: " + bookingId));
     }
 
-    public List<BookingResponse> getBookingsByUser(String emailId) {
-        return bookingRepository.findByEmailId(emailId);
+    public List<BookingResponse> getBookingsByUser(String email) {
+        return bookingRepository.findByEmail(email);
     }
 
     private String extractTokenFromRequest() {
@@ -167,8 +164,15 @@ public class BookingService {
                 return token;
             }
         }
-        // Replace this in extractTokenFromRequest
         throw new AuthorizationException("Authorization header not found");
+    }
 
+    public void saveConfirmedBooking(Long bookingId, String seatNumber) {
+        BookingResponse bookingResponse = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        bookingResponse.setSeatNumber(seatNumber);
+        bookingResponse.setBookingStatus("CONFIRMED");
+        bookingRepository.save(bookingResponse);
     }
 }

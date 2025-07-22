@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>flight-service</artifactId>
+	<artifactId>flightDTO-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>flight-service</name>
-	<description>Payment microservice for flight booking application</description>
+	<name>flightDTO-service</name>
+	<description>Payment microservice for flightDTO booking application</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -40,31 +40,39 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
 
         try {
-            // Extract token and username from Authorization header
+            logger.debug("Checking Authorization header");
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 token = authHeader.substring(7);
                 logger.debug("Extracted JWT token from header");
                 username = jwtService.extractUsername(token);
-                logger.debug("Username extracted from token: {}", username);
+                logger.debug("Email extracted from token: {}", username);
+            } else {
+                logger.debug("Authorization header missing or does not start with Bearer");
             }
 
-            // Authenticate user if token is valid and context is unauthenticated
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                logger.debug("Security context is unauthenticated. Proceeding with user details lookup.");
+
                 UserDetails userDetails = context.getBean(UserDetailsServiceImpl.class).loadUserByUsername(username);
-                logger.debug("User details loaded for username: {}", username);
+                logger.debug("UserDetails loaded for email: {}", username);
 
                 if (jwtService.validateToken(token, userDetails)) {
-                    logger.info("JWT token validated successfully for username: {}", username);
+                    logger.info("JWT token validated successfully for email: {}", username);
+
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                    logger.debug("SecurityContext updated with authenticated token for email: {}", username);
                 } else {
-                    logger.warn("Invalid JWT token for username: {}", username);
+                    logger.warn("JWT token validation failed for email: {}", username);
                 }
+            } else if (username != null) {
+                logger.debug("Security context already contains authentication for email: {}", username);
             }
         } catch (Exception e) {
-            logger.error("Error processing JWT filter: {}", e.getMessage(), e);
+            logger.error("Error occurred in JWT filter processing: {}", e.getMessage(), e);
         }
 
         filterChain.doFilter(request, response);

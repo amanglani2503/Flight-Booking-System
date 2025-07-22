@@ -40,27 +40,26 @@ public class JwtFilter extends OncePerRequestFilter {
             String username = null;
             String role = null;
 
-            // Extract token from Authorization header
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            if (authHeader == null) {
+                logger.debug("Authorization header is missing");
+            } else if (!authHeader.startsWith("Bearer ")) {
+                logger.warn("Authorization header does not start with 'Bearer ': {}", authHeader);
+            } else {
                 token = authHeader.substring(7).trim();
                 username = jwtService.extractUsername(token);
                 role = jwtService.extractRole(token);
                 logger.debug("Token extracted for user: {}", username);
             }
 
-            // Proceed only if the user is not already authenticated
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                // Ensure the role starts with "ROLE_"
-                String formattedRole = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+                String formattedRole = (role != null && role.startsWith("ROLE_")) ? role : "ROLE_" + role;
 
-                // Create UserDetails manually based on token data
                 UserDetails userDetails = new User(
                         username,
-                        "", // No password needed since it's already authenticated via token
+                        "",
                         List.of(new SimpleGrantedAuthority(formattedRole))
                 );
 
-                // Validate token
                 if (jwtService.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
@@ -70,7 +69,6 @@ public class JwtFilter extends OncePerRequestFilter {
                             );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                    // Set authentication in the context
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     logger.info("Authentication set for user: {}", username);
                 } else {
@@ -81,7 +79,6 @@ public class JwtFilter extends OncePerRequestFilter {
             logger.error("Exception occurred in JWT filter: {}", e.getMessage(), e);
         }
 
-        // Proceed with the filter chain
         filterChain.doFilter(request, response);
     }
 }

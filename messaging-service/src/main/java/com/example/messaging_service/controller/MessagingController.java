@@ -24,14 +24,14 @@ public class MessagingController {
     @PostMapping("/notify")
     public ResponseEntity<String> sendMessage(@RequestBody MessagingDetails details) {
         logger.info("Received message request for booking ID: {}", details.getBookingId());
-        logger.debug("Message payload: {}", details);
+        logger.debug("Messaging details: {}", details);
 
         try {
             rabbitTemplate.convertAndSend(rabbitMQConfig.getQueueName(), details);
-            logger.info("Message successfully sent to RabbitMQ queue: {}", rabbitMQConfig.getQueueName());
+            logger.info("Message successfully sent to RabbitMQ queue '{}'", rabbitMQConfig.getQueueName());
             return ResponseEntity.ok("Message sent to RabbitMQ");
         } catch (Exception e) {
-            logger.error("Failed to send message to RabbitMQ", e);
+            logger.error("Error while sending message to RabbitMQ queue '{}'", rabbitMQConfig.getQueueName(), e);
             return ResponseEntity.status(500).body("Failed to send message to RabbitMQ");
         }
     }

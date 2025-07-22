@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -13,12 +14,14 @@ public class MessagingDetails {
     private String recipientEmail;
     private String passengerName;
     private Long bookingId;
-    private Long flightId;
+    private String flightNumber;
     private String departureAirport;
     private String arrivalAirport;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private LocalTime departureTime;
+    private LocalTime arrivalTime;
+    private LocalDate journeyDate;
+    private LocalDate bookedOn;
     private String seatNumber;
     private double totalAmountPaid;
-    private String status;
+    private String bookingStatus;
 }

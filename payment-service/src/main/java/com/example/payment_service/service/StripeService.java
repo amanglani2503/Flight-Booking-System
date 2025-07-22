@@ -3,6 +3,7 @@ package com.example.payment_service.service;
 import com.example.payment_service.entity.Payment;
 import com.example.payment_service.entity.PaymentRequest;
 import com.example.payment_service.entity.StripeResponse;
+import com.example.payment_service.feign.BookingServiceFeign;
 import com.example.payment_service.repository.PaymentRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -10,6 +11,7 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +25,26 @@ public class StripeService {
     @Value("${stripe.secretKey}")
     private String secretKey;
 
+    @Autowired
+    private BookingServiceFeign bookingServiceFeign;
+
     private final PaymentRepository paymentRepository;
 
     public StripeService(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
 
-//    Creates a Stripe checkout session for processing the payment
+    // Creates a Stripe checkout session for processing the payment
     public StripeResponse checkoutProducts(PaymentRequest paymentRequest) {
-        // Set the Stripe API key
         Stripe.apiKey = secretKey;
+
+        logger.info("Initiating Stripe checkout session for booking ID: {}", paymentRequest.getBookingId());
 
         try {
             // Create product metadata
             SessionCreateParams.LineItem.PriceData.ProductData productData =
                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                            .setName("Flight ID: " + paymentRequest.getFlightId())
+                            .setName("Flight Number: " + paymentRequest.getFlightNumber())
                             .build();
 
             // Define price and currency
@@ -56,29 +62,31 @@ public class StripeService {
                             .setQuantity(1L)
                             .build();
 
-            // Build session params including success and cancel URLs
+            // Build session params
             SessionCreateParams params =
                     SessionCreateParams.builder()
                             .setMode(SessionCreateParams.Mode.PAYMENT)
-                            .setSuccessUrl("http://localhost:8084/success")
-                            .setCancelUrl("http://localhost:8084/cancel")
+                            .setSuccessUrl("http://localhost:8085/pay/success?bookingId=" +
+                                    paymentRequest.getBookingId() + "&seatNumber=" +
+                                    paymentRequest.getSeatNumber())
+                            .setCancelUrl("http://localhost:8085/cancel")
                             .addLineItem(lineItem)
                             .build();
 
-            // Create the Stripe checkout session
+            // Create the session
             Session session = Session.create(params);
 
             logger.info("Stripe session created successfully. Session ID: {}", session.getId());
 
-            // Save payment details to the database
+            // Save payment record
             Payment payment = Payment.builder()
                     .bookingId(paymentRequest.getBookingId())
                     .stripeSessionId(session.getId())
                     .currency(paymentRequest.getCurrency())
                     .amount((long) paymentRequest.getAmount())
                     .quantity(1L)
-                    .productName("Flight ID: " + paymentRequest.getFlightId())
-                    .status("CREATED")
+                    .productName("Flight Number: " + paymentRequest.getFlightNumber())
+                    .status("SUCCESS")
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();
@@ -86,7 +94,6 @@ public class StripeService {
             paymentRepository.save(payment);
             logger.info("Payment details saved for booking ID: {}", paymentRequest.getBookingId());
 
-            // Return successful Stripe response
             return StripeResponse.builder()
                     .status("SUCCESS")
                     .message("Payment session created")
@@ -96,18 +103,27 @@ public class StripeService {
 
         } catch (StripeException e) {
             logger.error("Stripe session creation failed: {}", e.getMessage(), e);
-            // Return failure response
             return StripeResponse.builder()
                     .status("FAILED")
                     .message("Stripe session creation failed: " + e.getMessage())
                     .build();
         } catch (Exception e) {
             logger.error("Unexpected error while creating Stripe session", e);
-            // Return failure response
             return StripeResponse.builder()
                     .status("FAILED")
                     .message("Unexpected error: " + e.getMessage())
                     .build();
+        }
+    }
+
+    public void handleSuccess(String bookingId, String seatNumber) {
+        logger.info("Handling successful payment for bookingId: {}, seatNumber: {}", bookingId, seatNumber);
+        try {
+            bookingServiceFeign.saveConfirmBooking(bookingId, seatNumber);
+            logger.info("Booking confirmed successfully for bookingId: {}", bookingId);
+        } catch (Exception e) {
+            logger.error("Error while confirming booking in booking service for bookingId: {}", bookingId, e);
+            throw e;
         }
     }
 }

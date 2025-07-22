@@ -3,9 +3,10 @@ package com.example.booking_service.entity;
 import jakarta.persistence.*;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "bookings")
@@ -14,27 +15,26 @@ import java.time.LocalDateTime;
 public class BookingResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookingId;
+    private Long id;
 
-    private String emailId;
-    private Long flightId;
+    private String email;
+    private String flightNumber;
     private String passengerName;
-    private LocalDateTime bookingDate;
-    private String status;
+    private LocalDate dateOfBooking;
+    private LocalDate journeyDate;
+    private String bookingStatus;
 
+    @Getter
     private String seatNumber;
 
-    public BookingResponse(String emailId, Long bookingId, String passengerName, Long flightId, LocalDateTime bookingDate, String status, String seatNumber) {
-        this.emailId = emailId;
-        this.bookingId = bookingId;
+    public BookingResponse(String email, Long id, String passengerName, String flightNumber, LocalDate dateOfBooking, LocalDate journeyDate, String bookingStatus, String seatNumber) {
+        this.email = email;
+        this.id = id;
         this.passengerName = passengerName;
-        this.flightId = flightId;
-        this.bookingDate = bookingDate;
-        this.status = status;
+        this.flightNumber = flightNumber;
+        this.dateOfBooking = LocalDate.now();
+        this.journeyDate = journeyDate;
+        this.bookingStatus = bookingStatus;
         this.seatNumber = seatNumber;
-    }
-
-    public String getSeatNumber() {
-        return seatNumber;
     }
 }

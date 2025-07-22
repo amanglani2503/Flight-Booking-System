@@ -14,6 +14,6 @@ public interface PaymentServiceFeign {
 
     // Initiates payment via checkout endpoint
     @PostMapping("/pay/checkout")
-    StripeResponse makePayment(@RequestBody PaymentRequest request,
+    StripeResponse makePayment(@RequestBody PaymentRequest paymentRequest,
                                @RequestHeader("Authorization") String token);
 }

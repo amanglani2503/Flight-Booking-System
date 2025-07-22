@@ -11,9 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,8 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -40,15 +35,25 @@ public class SecurityConfig {
     // Defines security filter chain with authorization rules and JWT filter
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        logger.info("Setting up security filter chain");
+        logger.info("Initializing SecurityFilterChain");
+
+        logger.debug("Disabling CSRF and enabling CORS");
+        logger.debug("Setting authorization rules and adding JwtFilter before UsernamePasswordAuthenticationFilter");
+
         return http.csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/auth/login").permitAll()
-                        .requestMatchers(this::isRequestFromApiGateway).permitAll()
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> {
+                    logger.debug("Configuring endpoint permissions");
+                    auth.requestMatchers("/auth/register", "/auth/login", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
+                    auth.requestMatchers("/users/**").hasRole("PASSENGER");
+                    auth.requestMatchers(this::isRequestFromApiGateway).permitAll();
+                    auth.anyRequest().authenticated();
+                })
                 .authenticationProvider(authenticationProvider())
-                .formLogin(form -> form.disable())
+                .formLogin(form -> {
+                    logger.debug("Disabling form login");
+                    form.disable();
+                })
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -57,9 +62,11 @@ public class SecurityConfig {
     // Checks if request originated from API Gateway based on custom header
     private boolean isRequestFromApiGateway(HttpServletRequest request) {
         String sourceHeader = request.getHeader("X-Source");
-        logger.debug("Received X-Source header: {}", sourceHeader);
+        logger.debug("Checking request source: X-Source = {}", sourceHeader);
+
         boolean isFromGateway = API_GATEWAY_HOST.equalsIgnoreCase(sourceHeader);
-        logger.info("Is request from API Gateway? {}", isFromGateway);
+        logger.info("Request from API Gateway? {}", isFromGateway);
+
         return isFromGateway;
     }
 
@@ -67,31 +74,19 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         logger.info("Creating DaoAuthenticationProvider with BCryptPasswordEncoder");
+
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         provider.setUserDetailsService(userDetailsService);
+
+        logger.debug("AuthenticationProvider configured with custom UserDetailsService and encoder");
         return provider;
     }
 
     // Provides authentication manager bean
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        logger.info("Providing AuthenticationManager bean");
+        logger.info("Creating AuthenticationManager bean from AuthenticationConfiguration");
         return config.getAuthenticationManager();
     }
-
-    // CORS configuration to allow requests from API Gateway
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        logger.info("Configuring CORS settings for API Gateway");
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("http://localhost:8080"));
-//        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//        configuration.setAllowedHeaders(List.of("*"));
-//        configuration.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 }

@@ -1,5 +1,6 @@
 package com.example.flight_service.entity;
 
+import com.example.flight_service.dto.FlightDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;

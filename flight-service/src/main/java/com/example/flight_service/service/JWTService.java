@@ -24,33 +24,42 @@ public class JWTService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-
-//     Extracts the role claim from a JWT token
+    // Extracts the role claim from a JWT token
     public String extractRole(String token) {
+        logger.debug("Extracting role from token");
         try {
-            return extractAllClaims(token).get("role", String.class);
+            String role = extractAllClaims(token).get("role", String.class);
+            logger.debug("Role extracted: {}", role);
+            return role;
         } catch (Exception e) {
-            logger.error("Failed to extract role from token: {}", e.getMessage());
+            logger.error("Failed to extract role from token: {}", e.getMessage(), e);
             return null;
         }
     }
 
-
-//    Extracts the username (subject) from the token.
-     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    // Extracts the username (subject) from the token.
+    public String extractUsername(String token) {
+        logger.debug("Extracting username from token");
+        try {
+            String username = extractClaim(token, Claims::getSubject);
+            logger.debug("Username extracted: {}", username);
+            return username;
+        } catch (Exception e) {
+            logger.error("Failed to extract username from token: {}", e.getMessage(), e);
+            return null;
+        }
     }
 
-
-//     Generic method to extract a specific claim using a resolver function.
+    // Generic method to extract a specific claim using a resolver function.
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
 
-//    Parses and validates the JWT, returning all claims.
+    // Parses and validates the JWT, returning all claims.
     private Claims extractAllClaims(String token) {
         try {
+            logger.debug("Parsing JWT token claims");
             return Jwts.parser()
                     .verifyWith(getKey())
                     .build()
@@ -60,37 +69,40 @@ public class JWTService {
             logger.warn("Token is expired: {}", e.getMessage());
             throw e;
         } catch (JwtException e) {
-            logger.error("Invalid JWT token: {}", e.getMessage());
+            logger.error("Invalid JWT token: {}", e.getMessage(), e);
             throw new RuntimeException("Invalid token");
         }
     }
 
-//     Decodes the Base64-encoded secret key into a SecretKey object.
+    // Decodes the Base64-encoded secret key into a SecretKey object.
     private SecretKey getKey() {
+        logger.debug("Decoding secret key for JWT parsing");
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
-//    Validates a token by checking the username and expiration.
+    // Validates a token by checking the username and expiration.
     public boolean validateToken(String token, UserDetails userDetails) {
+        logger.debug("Validating token for user: {}", userDetails.getUsername());
         try {
             final String username = extractUsername(token);
-            return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+            boolean isValid = (username != null && username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+            logger.debug("Token validation result: {}", isValid);
+            return isValid;
         } catch (Exception e) {
-            logger.warn("Token validation failed: {}", e.getMessage());
+            logger.warn("Token validation failed: {}", e.getMessage(), e);
             return false;
         }
     }
 
-
-//     Returns whether the token is expired.
+    // Returns whether the token is expired.
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        boolean expired = extractExpiration(token).before(new Date());
+        logger.debug("Token expired: {}", expired);
+        return expired;
     }
 
-
-//     Extracts the expiration time from the token.
+    // Extracts the expiration time from the token.
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }

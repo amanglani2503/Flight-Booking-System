@@ -29,42 +29,54 @@ public class JwtFilter extends OncePerRequestFilter {
     private JWTService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
             throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
-        String token = null;
-        String username = null;
-        String role = null;
+        try {
+            String authHeader = request.getHeader("Authorization");
+            String token = null;
+            String username = null;
+            String role = null;
 
-        logger.debug("Processing request: {}", request.getRequestURI());
-
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7);
-            logger.debug("Token extracted: {}", token);
-
-            try {
+            if (authHeader == null) {
+                logger.debug("Authorization header is missing");
+            } else if (!authHeader.startsWith("Bearer ")) {
+                logger.warn("Authorization header does not start with 'Bearer ': {}", authHeader);
+            } else {
+                token = authHeader.substring(7).trim();
                 username = jwtService.extractUsername(token);
                 role = jwtService.extractRole(token);
-                logger.debug("Extracted username: {}, role: {}", username, role);
-            } catch (Exception e) {
-                logger.error("Failed to extract details from token", e);
+                logger.debug("Token extracted for user: {}", username);
             }
-        }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = new User(username, "", List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                String formattedRole = (role != null && role.startsWith("ROLE_")) ? role : "ROLE_" + role;
 
-            if (jwtService.validateToken(token, userDetails)) {
-                logger.info("Token validated successfully for user: {}", username);
+                UserDetails userDetails = new User(
+                        username,
+                        "",
+                        List.of(new SimpleGrantedAuthority(formattedRole))
+                );
 
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            } else {
-                logger.warn("Token validation failed for user: {}", username);
+                if (jwtService.validateToken(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                    logger.info("Authentication set for user: {}", username);
+                } else {
+                    logger.warn("Invalid JWT token for user: {}", username);
+                }
             }
+        } catch (Exception e) {
+            logger.error("Exception occurred in JWT filter: {}", e.getMessage(), e);
         }
 
         filterChain.doFilter(request, response);

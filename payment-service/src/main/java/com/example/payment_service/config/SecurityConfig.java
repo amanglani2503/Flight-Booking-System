@@ -18,8 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-@Configuration // Marks class as a source of bean definitions
-@EnableWebSecurity // Enables Spring Security
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -28,16 +28,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/pay/checkout").hasRole("PASSENGER") // Restrict access by role
-                        .anyRequest().authenticated() // All other endpoints require authentication
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless session
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
-                .formLogin(form -> form.disable()) // Disable form login
-                .httpBasic(httpBasic -> httpBasic.disable()); // Disable HTTP basic auth
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/pay/success").permitAll();
+                    auth.requestMatchers("/pay/checkout").hasRole("PASSENGER");
+                    auth.anyRequest().authenticated();
+                })
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin(formLogin -> formLogin.disable())
+                .httpBasic(httpBasic -> httpBasic.disable());
 
         return http.build();
     }
@@ -45,27 +46,27 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4201")); // Frontend origin
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE")); // Allowed HTTP methods
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allowed headers
-        configuration.setAllowCredentials(true); // Allow cookies/auth headers
+        configuration.setAllowedOrigins(List.of("http://localhost:4201"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply CORS settings globally
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
     @Bean
     public HttpFirewall relaxedHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowUrlEncodedSlash(true); // Allow encoded slashes
-        firewall.setAllowSemicolon(true); // Allow semicolons in URL
-        firewall.setAllowUrlEncodedPercent(true); // Allow encoded percent characters
+        firewall.setAllowUrlEncodedSlash(true);
+        firewall.setAllowSemicolon(true);
+        firewall.setAllowUrlEncodedPercent(true);
         return firewall;
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> null; // Placeholder implementation
+        return username -> null;
     }
 }

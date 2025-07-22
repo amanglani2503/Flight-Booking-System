@@ -17,22 +17,28 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     public void sendBookingEmail(MessagingDetails details) {
+        logger.info("Preparing booking confirmation email for booking ID: {}", details.getBookingId());
+        logger.debug("Booking email payload: {}", details);
+
         try {
             SimpleMailMessage message = createMessage(details, true);
             mailSender.send(message);
             logger.info("Booking confirmation email sent to {}", details.getRecipientEmail());
         } catch (Exception e) {
-            logger.error("Failed to send booking confirmation email to {}: {}", details.getRecipientEmail(), e.getMessage());
+            logger.error("Failed to send booking confirmation email to {}", details.getRecipientEmail(), e);
         }
     }
 
     public void sendCancelEmail(MessagingDetails details) {
+        logger.info("Preparing booking cancellation email for booking ID: {}", details.getBookingId());
+        logger.debug("Cancellation email payload: {}", details);
+
         try {
             SimpleMailMessage message = createMessage(details, false);
             mailSender.send(message);
             logger.info("Cancellation email sent to {}", details.getRecipientEmail());
         } catch (Exception e) {
-            logger.error("Failed to send cancellation email to {}: {}", details.getRecipientEmail(), e.getMessage());
+            logger.error("Failed to send cancellation email to {}", details.getRecipientEmail(), e);
         }
     }
 
@@ -44,7 +50,7 @@ public class EmailService {
             message.setSubject("Booking Confirmation - " + details.getBookingId());
             message.setText(
                     "Dear " + details.getPassengerName() + ",\n\n"
-                            + "Your booking (ID: " + details.getBookingId() + ") for Flight " + details.getFlightId()
+                            + "Your booking (ID: " + details.getBookingId() + ") for Flight " + details.getFlightNumber()
                             + " from " + details.getDepartureAirport() + " to " + details.getArrivalAirport()
                             + " has been confirmed.\n\n"
                             + "Seat Number: " + details.getSeatNumber() + "\n"
@@ -57,7 +63,7 @@ public class EmailService {
             message.setSubject("Booking Cancellation - " + details.getBookingId());
             message.setText(
                     "Dear " + details.getPassengerName() + ",\n\n"
-                            + "We regret to inform you that your booking (ID: " + details.getBookingId() + ") for Flight " + details.getFlightId()
+                            + "We regret to inform you that your booking (ID: " + details.getBookingId() + ") for Flight " + details.getFlightNumber()
                             + " from " + details.getDepartureAirport() + " to " + details.getArrivalAirport()
                             + " has been canceled.\n\n"
                             + "Seat Number: " + details.getSeatNumber() + "\n"
@@ -69,6 +75,7 @@ public class EmailService {
             );
         }
 
+        logger.debug("Email message created: Subject = '{}'", message.getSubject());
         return message;
     }
 }
